@@ -1,0 +1,44 @@
+class RecommendationSystem:
+    def __init__(self):
+        self.users = {
+            "Alice": {"genres": {"Action": 5, "Comedy": 3, "Drama": 2}},
+            "Bob": {"genres": {"Comedy": 4, "Drama": 3, "Romance": 2}},
+            "Charlie": {"genres": {"Action": 3, "Drama": 4, "Thriller": 5}},
+            "David": {"genres": {"Comedy": 2, "Romance": 3, "Thriller": 4}},
+            "Eva": {"genres": {"Action": 4, "Thriller": 3, "Horror": 5}},
+        }
+
+    def recommend_movie(self, user):
+        if user in self.users:
+            most_watched_genre = max(self.users[user]["genres"], key=self.users[user]["genres"].get)
+            recommendations = {
+                "Action": ["The Dark Knight", "Inception", "Mad Max: Fury Road"],
+                "Comedy": ["Superbad", "The Hangover", "Bridesmaids"],
+                "Drama": ["The Shawshank Redemption", "Forrest Gump", "The Godfather"],
+                "Romance": ["Titanic", "The Notebook", "Pride and Prejudice"],
+                "Thriller": ["The Silence of the Lambs", "Se7en", "Gone Girl"],
+                "Horror": ["The Conjuring", "Get Out", "A Quiet Place"],
+            }
+            recommended_movies = recommendations.get(most_watched_genre, [])
+            if recommended_movies:
+                return f"Based on your most watched genre ({most_watched_genre}), I recommend: {', '.join(recommended_movies)}."
+            else:
+                return "No recommendations available for your most watched genre."
+        else:
+            return "Oops! User not found."
+
+if __name__ == "__main__":
+    recommender = RecommendationSystem()
+    print("Welcome to Movie Recommendation System!")
+    while True:
+        user_input = input("Enter the name of the user (or type 'exit' to quit): ").strip()
+        if user_input.lower() == "exit":
+            print("See you later!")
+            break
+        else:
+            recommendation = recommender.recommend_movie(user_input)
+            print(recommendation)
+            additional_recommendation = input("Would you like another recommendation? (yes/no): ").strip().lower()
+            if additional_recommendation == "no":
+                print("See you later!")
+                break
